@@ -14,7 +14,7 @@ export const Calculator = () => {
   const { format } = useParseNumber();
 
   return (
-    <section className="flex flex-col gap-2 w-96">
+    <section className="flex flex-col gap-2 w-[96vw]">
       <div className="grid w-full max-w-sm items-center gap-3">
         <Label htmlFor={calculatorVariableKey.INITIAL_BALANCE}>초기 보유 금액</Label>
         <figure className="flex flex-col gap-1">

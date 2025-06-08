@@ -20,7 +20,7 @@ export const Result = () => {
   const { save } = useSaveAtLocalStorage();
 
   return (
-    <section className="w-96 flex flex-col">
+    <section className="w-[96vw] flex flex-col">
       <Card className="w-full">
         <CardHeader>
           <CardTitle>계산 결과</CardTitle>

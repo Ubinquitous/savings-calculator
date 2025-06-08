@@ -4,7 +4,7 @@ import { Label } from './components/ui/label';
 
 const App = () => {
   return (
-    <div className="w-screen h-screen flex items-center justify-center flex-col">
+    <div className="w-screen flex items-center justify-center flex-col">
       <header className="flex items-center pb-4">
         <img
           src="/icon.png"

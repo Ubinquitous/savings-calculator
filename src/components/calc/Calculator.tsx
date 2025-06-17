@@ -66,7 +66,7 @@ export const Calculator = () => {
         name={calculatorVariableKey.DEPOSIT_PERIOD}
         onChange={handleCalculatorVariableChange}
         value={calculatorVariable.depositPeriod}
-        guideline={`${calculatorVariable.depositPeriod}년`}
+        guideline={`${calculatorVariable.depositPeriod || 0}년`}
       />
       <Button onClick={handleCalculateClick}>계산하기</Button>
     </section>

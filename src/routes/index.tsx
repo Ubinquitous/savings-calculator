@@ -2,13 +2,6 @@ import { Calculator } from '@/components/calc/Calculator';
 import { Result } from '@/components/calc/Result';
 import { Label } from '@/components/ui/label';
 import { createFileRoute } from '@tanstack/react-router';
-import mixpanel from 'mixpanel-browser';
-
-mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN!, {
-  debug: true,
-  track_pageview: true,
-  persistence: 'localStorage',
-});
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,

@@ -1,5 +1,6 @@
 import { Calculator } from '@/components/calc/Calculator';
 import { Result } from '@/components/calc/Result';
+import { SalaryTaxingCalculator } from '@/components/calc/SalaryTaxingCalculator';
 import { Label } from '@/components/ui/label';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -18,6 +19,7 @@ function RouteComponent() {
         />
         <Label className="text-xl">토파즈 저축 계산기</Label>
       </header>
+      <SalaryTaxingCalculator />
       <Calculator />
       <div className="h-6" />
       <Result />

@@ -1,6 +1,7 @@
 import { atom, useAtom } from 'jotai';
 import { useEffect, type ChangeEvent } from 'react';
 import { useSaveAtLocalStorage } from './useSaveAtLocalStorage';
+import mixpanel from 'mixpanel-browser';
 
 type CalculatorVariable = Partial<{
   initialBalance: number;
@@ -10,8 +11,11 @@ type CalculatorVariable = Partial<{
   depositPeriod: number;
 }>;
 
+type History = Array<{ label: string; value: number }>;
+
 interface CalculatorResult {
-  history: Array<{ label: string; value: number }>;
+  history: History;
+  increaseHistory: History;
   totalAmount: number;
 }
 
@@ -39,6 +43,7 @@ const calculatorVariableInitialData: CalculatorVariable = {
 const calculatorResultInitialData: CalculatorResult = {
   // 매년 저축 정보
   history: [],
+  increaseHistory: [],
   // 총 금액
   totalAmount: 0,
 };
@@ -84,13 +89,21 @@ export function useCalculator({ mode }: CalculatorOptions) {
           i,
     }));
 
+    const increaseHistory = history.map((_, idx) => {
+      const countedArray = Array.from(Array(idx + 1)).map((_, i) => i);
+      const partialAmount = countedArray.reduce((a, c) => a + history[c].value, 0);
+      return { label: `${idx + 1}년`, value: partialAmount };
+    });
+
     const totalAmount =
       (calculatorVariable.initialBalance ?? 0) +
       history.map(({ value }) => value).reduce((a, c) => a + c, 0);
-    setCalculatorResult({ history, totalAmount });
+    setCalculatorResult({ history, totalAmount, increaseHistory });
+    mixpanel.track('CLICK_CTA', { totalAmount });
   };
 
   useEffect(() => {
+    mixpanel.track('VIEW', { userAgent: navigator.userAgent });
     const { variable, result } = load();
     if (variable && result) {
       setCalculatorVariable(variable);

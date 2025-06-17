@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { calculatorResultAtom, calculatorVariableAtom } from './useCalculator';
+import mixpanel from 'mixpanel-browser';
 
 export const useSaveAtLocalStorage = () => {
   const calculatorVariable = useAtomValue(calculatorVariableAtom);
@@ -11,6 +12,7 @@ export const useSaveAtLocalStorage = () => {
       localStorage.setItem('result', JSON.stringify(calculatorResult));
     }
     alert('저장 완료!');
+    mixpanel.track('CLICK_SAVE');
   };
 
   const load = () => {

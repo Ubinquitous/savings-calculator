@@ -1,18 +1,9 @@
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { useCalculator } from '@/hooks/useCalculator';
 import { useParseNumber } from '@/hooks/useParseNumber';
 import { Button } from '../ui/button';
 import { useSaveAtLocalStorage } from '@/hooks/useSaveAtLocalStorage';
-
-const chartConfig = {
-  value: {
-    label: '금액',
-    color: 'hsl(var(--chart-1))',
-  },
-};
+import Chart from './Chart';
 
 export const Result = () => {
   const { withComma } = useParseNumber();
@@ -27,38 +18,19 @@ export const Result = () => {
           <CardDescription>총 {withComma(String(result.totalAmount ?? 0))}원</CardDescription>
         </CardHeader>
         <CardContent>
-          <CardDescription className="text-xs">매년 모으는 금액 히스토리</CardDescription>
+          <CardDescription className="text-xs">매년 저축 금액 히스토리</CardDescription>
           <div className="h-2" />
-          <ChartContainer config={chartConfig}>
-            <AreaChart
-              accessibilityLayer
-              data={result.history}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="label"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
-              />
-              <Area
-                dataKey="value"
-                type="natural"
-                fill="var(--color-value)"
-                fillOpacity={0.4}
-                stroke="var(--color-value)"
-              />
-            </AreaChart>
-          </ChartContainer>
+          <Chart
+            chartConfig={{ label: '금액', color: 'hsl(var(--chart-1))' }}
+            data={result.history}
+          />
+          <div className="h-6" />
+          <CardDescription className="text-xs">매년 총합 저축액 히스토리</CardDescription>
+          <div className="h-2" />
+          <Chart
+            chartConfig={{ label: '금액', color: 'hsl(var(--chart-1))' }}
+            data={result.increaseHistory}
+          />
         </CardContent>
       </Card>
       <div className="h-3" />

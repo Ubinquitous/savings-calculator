@@ -84,8 +84,9 @@ export function useCalculator({ mode }: CalculatorOptions) {
     const history = Array.from(Array(calculatorVariable.depositPeriod)).map((_, i) => ({
       label: `${i + 1}년`,
       value:
-        (calculatorVariable.monthlySavings ?? 0) * 12 +
-        ((calculatorVariable.incrementAmount ?? 0) / (calculatorVariable.incrementPerYear ?? 0)) *
+        (calculatorVariable.monthlySavings ?? 0) * 10000 * 12 +
+        (((calculatorVariable.incrementAmount ?? 0) * 10000) /
+          (calculatorVariable.incrementPerYear ?? 0)) *
           i,
     }));
 
@@ -96,7 +97,7 @@ export function useCalculator({ mode }: CalculatorOptions) {
     });
 
     const totalAmount =
-      (calculatorVariable.initialBalance ?? 0) +
+      (calculatorVariable.initialBalance ?? 0) * 10000 +
       history.map(({ value }) => value).reduce((a, c) => a + c, 0);
     setCalculatorResult({ history, totalAmount, increaseHistory });
     mixpanel.track('CLICK_CTA', { totalAmount });
